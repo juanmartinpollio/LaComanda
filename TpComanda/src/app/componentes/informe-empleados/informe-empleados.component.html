@@ -1,0 +1,123 @@
+<app-inicio></app-inicio>
+<div class="container-fluid bg-Menu">
+    <br><br>
+        <div [(hidden)]="bandAbreInforme" class="row">
+    <div class="col-md-4 col-sm-4 col-xs-12"></div>
+        <div class="col-md-4 col-sm-4 col-xs-12">
+            <form class="form-Login">
+                <div class="alert alert-dark" style="text-align: center;" role="alert">
+                    <div style="color:black;">La Comanda - Informes de Empleados</div>
+                </div>
+               <div style="text-align: center;">
+                   <div class="form-group">
+                        <label style="color:black;">Tipo de informe: </label>
+                        <select style="color:grey;" class="form-control" [(ngModel)]="tipoInforme" [ngModelOptions]="{standalone: true}" id="tipoInforme">
+                            <option style="color:grey;" value="0">-Seleccionar tipo de informe-</option>
+                            <option style="color:grey;" value="1">Dias y horarios de ingreso</option>
+                            <option style="color:grey;" value="2">Cantidad de operaciones por sector</option>
+                            <option style="color:grey;" value="3">Cantidad de operaciones por estado</option>
+                        </select>  
+                   </div>
+                   <div class="form-group" *ngIf="tipoInforme == 2">
+                        <label style="color:black;">Sector: </label>
+                        <select style="color:grey;" class="form-control" [(ngModel)]="tipoSector" [ngModelOptions]="{standalone: true}" id="tipoSector">
+                            <option style="color:grey;" value="0">-Todos-</option>
+                            <option style="color:grey;" value="3">Barra de tragos y vinos</option>
+                            <option style="color:grey;" value="4">Barra de choperas</option>
+                            <option style="color:grey;" value="5">Cocina</option>
+                            <option style="color:grey;" value="7">Candy Bar</option>
+                        </select>  
+                    </div>
+                    <div class="form-group" *ngIf="tipoInforme == 3">
+                            <label style="color:black;">Estado: </label>
+                            <select style="color:grey;" class="form-control" [(ngModel)]="tipoEstado" [ngModelOptions]="{standalone: true}" id="tipoEstado">
+                                <option style="color:grey;" value="0">-Todos-</option>
+                                <option style="color:grey;" value="1">Pendiente</option>
+                                <option style="color:grey;" value="2">En preparación</option>
+                                <option style="color:grey;" value="3">Lista para servir</option>
+                                <option style="color:grey;" value="4">Entregado</option>
+                            </select>  
+                        </div>
+                    <div class="form-group">
+                        <label style="color:black;">Fecha desde:</label>
+                        <br>
+                        <p-calendar [(ngModel)]="fechaDesde" [ngModelOptions]="{standalone: true}" id="fechaDesde" dateFormat="yy-mm-dd"></p-calendar>
+                    </div>
+                    <div class="form-group">
+                        <label style="color:black;">Fecha hasta:</label>
+                        <br>
+                        <p-calendar [(ngModel)]="fechaHasta" [ngModelOptions]="{standalone: true}" id="fechaHasta" dateFormat="yy-mm-dd"></p-calendar>
+                    </div>
+                    <div class="form-group">
+                            <p-messages [(value)]="msgs"></p-messages>
+                        <button class="btn btn-success" (click)="buscarInformes()">Buscar Informe</button>
+                    </div>
+               </div>
+            </form>
+        </div> 
+    <div class="col-md-4 col-sm-4 col-xs-12"></div>    
+</div>
+<div [(hidden)]="!bandAbreInforme">
+        <div class="form-group" *ngIf="tipoInforme == 1" [hidden]="informeLogin">
+                <button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL" (click)="exportExcel('usuLog')" style="margin-right: 0.5em;" class="ui-button-success"></button><button class="btn btn-primary" (click)="generarNuevo()">Generar nuevo informe</button>
+                
+                <table class="table table-dark" id="usuLog">
+                    <thead class="thead-dark">
+                        <tr>
+                        <th scope="col">Empleado</th>
+                        <th scope="col">Fecha de ingreso</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of UsuariosPorLogin">
+                        <td>{{item.usuario}}</td>
+                        <td>{{item.fecha}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="form-group" *ngIf="tipoInforme == 2" [hidden]="informeSector">
+                    <button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL" (click)="exportExcel('usuSector')" style="margin-right: 0.5em;" class="ui-button-success"></button><button class="btn btn-primary" (click)="generarNuevo()">Generar nuevo informe</button>
+                    
+                <table class="table table-dark" id="usuSector">
+                    <thead class="thead-dark">
+                        <tr>
+                        <th scope="col">Empleado</th>
+                        <th scope="col">Sector</th>
+                        <th scope="col">Fecha de operacion</th>
+                        <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of UsuariosPorSector">
+                        <td>{{item.PreparadorCodigo}}</td>
+                        <td>{{item.ProductoTipo | productoSector}}</td>
+                        <td>{{item.PedidoFecha}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="form-group" *ngIf="tipoInforme == 3" [hidden]="informeEstado">
+                    <button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL" (click)="exportExcel('usuEstado')" style="margin-right: 0.5em;" class="ui-button-success"></button><button class="btn btn-primary" (click)="generarNuevo()">Generar nuevo informe</button>
+                    
+                <table class="table table-dark" id="usuEstado">
+                    <thead class="thead-dark">
+                        <tr>
+                        <th scope="col">Empleado</th>
+                        <th scope="col">Sector</th>
+                        <th scope="col">Estado</th>
+                        <th scope="col">Fecha de operacion</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of UsuariosPorEstado">
+                        <td>{{item.PreparadorCodigo}}</td>
+                        <td>{{item.ProductoTipo | productoSector}}</td>
+                        <td>{{item.Estado | pedidoproductoestado}}</td>
+                        <td>{{item.PedidoFecha}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+</div>
+</div>

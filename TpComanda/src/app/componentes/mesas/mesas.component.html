@@ -1,0 +1,119 @@
+<app-inicio></app-inicio>
+<div class="container-fluid bg-Mesas">
+  <div class="row">
+    <div class="col-md-4 col-sm-4 col-xs-12"></div>
+      <div class="col-md-4 col-sm-4 col-xs-12">
+        <br>
+        <form class="form-Login">
+            <br>
+            <br>
+            <div class="alert alert-dark" style="text-align: center;" role="alert">
+                <div style="color:black;">Administración de mesas</div>
+            </div>
+            <select class="form-control" (change)="seleccionaMesa($event.target.value)">
+              <option>-Seleccione una mesa-</option>
+              <optgroup label="Mesas disponibles">
+                <option *ngFor="let item of listaMesasDisp" [value]="item.mesa_codigo">
+                  {{item.nombre}}
+                </option>
+              </optgroup>
+              <optgroup label="Mesas ocupadas">
+                <option *ngFor="let item of listaMesasOcup" [value]="item.mesa_codigo">
+                  {{item.nombre}}
+                </option>
+              </optgroup>
+              <optgroup label="Mesas cerradas">
+                <option *ngFor="let item of listaMesasCerr" [value]="item.mesa_codigo">
+                  {{item.nombre}}
+                </option>
+              </optgroup>
+            </select>
+            <br>
+            <br>
+            <button style="width:100%" class="btn btn-info" (click)="crearCuenta()" [disabled]="abreMesa">Abrir cuenta</button>
+            <div role="separator" class="dropdown-divider"></div>
+            <button style="width:100%" class="btn btn-success" (click)="cargarPedido()" [disabled]="cargaPedido">Cargar pedido</button>
+            <div role="separator" class="dropdown-divider"></div>
+            <button style="width:100%" class="btn btn-danger" (click)="cerrarMesa()" [disabled]="cierraMesa">Cerrar cuenta</button>
+            <div role="separator" class="dropdown-divider"></div>
+            <button style="width:100%" class="btn btn-warning" (click)="reiniciarMesa()" [disabled]="reabrirMesa">Reabrir mesa</button>
+            <p-messages [(value)]="msgs"></p-messages>
+            <br><br>
+            <div [hidden]="muestraMesa">
+              <div class="alert alert-dark" style="text-align: center;" role="alert">
+                <div style="color:black;">Estado de la mesa: {{auxEstadoSeleccionado | mesaEstado}}</div>
+              </div>
+              <table class="table table-dark">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Lista de Clientes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of auxUsuariosSeleccionado">
+                    <th scope="row">{{item.UsuarioCodigo}}</th>
+                  </tr>
+                </tbody>
+              </table>
+              <table class="table table-dark">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Lista de Pedidos</th>
+                  </tr>
+                  <tr>
+                    <th scope="col">Código de Pedido</th>
+                    <th scope="col">Producto</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Preparador</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of auxPedidosSeleccionado">
+                    <th scope="row">{{item.PedidoCodigo}}</th>
+                    <th scope="row">{{item.ProductoNombre}}</th>
+                    <th scope="row">{{item.Estado | pedidoproductoestado}}</th>
+                    <th scope="row">{{item.PreparadorCodigo}}</th>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </form>
+      </div>
+    <div class="col-md-4 col-sm-4 col-xs-12"></div>
+  </div>
+</div>
+
+<p-dialog [style]="{width: '50%'}" header="Lista de clientes" [(visible)]="bandAbreMesa">
+  <p-table [columns]="colsCli" [value]="listaClientes">
+      <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                {{col.header}}
+                <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order"
+                    ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+            </th>
+            <th>
+                Seleccionar
+            </th>
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns">
+          <tr>
+              <td *ngFor="let col of columns">
+                  {{rowData[col.field]}}
+              </td>
+              <td *ngFor="let col of columns">
+                  <input type="checkbox" name="clientes" value="{{rowData[col.field]}}"><br>
+              </td>
+          </tr>
+      </ng-template>
+  </p-table>
+  <br>
+  <button class="btn btn-success" (click)="confirmarCuenta()">Confirmar</button>
+</p-dialog>
+
+<p-dialog [showHeader]=false [closable]=false [(visible)]="Display">
+  <div style="text-align: center">
+      <p-progressSpinner></p-progressSpinner>
+  </div>
+</p-dialog>

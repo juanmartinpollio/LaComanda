@@ -1,0 +1,65 @@
+<app-inicio></app-inicio>
+<div class="container-fluid bg-Mesas">
+  <br>
+  <br>
+  <input class="form-control" style="text-align: center;" id="mesa" type="text" placeholder="Readonly input here…" readonly>
+  <br>
+  <div style="text-align: center;">
+    <button class="btn btn-success" (click)="ConfirmarPedido()">Confirmar pedido</button>
+  </div>
+  <br>
+  <select class="form-control" [(ngModel)]="codigoAux">
+      <option value="0">-Seleccione un producto-</option>
+      <option value="{{item.codigo}}" *ngFor="let item of listaProductos">
+          {{item.nombre}}
+      </option>
+  </select>
+  <br>
+  <select class="form-control" [(ngModel)]="codigoUsuarioAux">
+      <option value="nadie">-Seleccione integrante de la mesa-</option>
+      <option value="{{item.UsuarioCodigo}}" *ngFor="let item of listaClientes">
+          {{item.UsuarioCodigo}}
+      </option>
+  </select>
+  <br>
+  <div style="text-align: center;">
+    <button class="btn btn-info" (click)="AgregarProducto()">Agregar producto a pedido</button>
+    <p-messages [(value)]="msgs"></p-messages>
+  </div>
+  <br>
+  <div>
+    <ngx-file-drop  (onFileDrop)="dropped($event)">
+      <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+        <button type="button" (click)="openFileSelector()">Buscar archivos</button>
+      </ng-template>
+    </ngx-file-drop>    
+  </div>
+  <br>
+  <div class="form-group">
+  <table class="table table-dark">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Producto</th>
+          <th scope="col">Cantidad</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of productosPedido">
+          <th scope="row">{{item.codigo}}</th>
+          <td>{{item.nombre}}</td>
+          <td><input type="number" min="1" value="1" [(ngModel)]="item.cantidad"></td>
+          <td><button class="btn btn-danger" (click)="quitarProducto(item)">Quitar de la lista</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <br><br>
+</div>
+<p-dialog [showHeader]=false [closable]=false [(visible)]="Display">
+  <div style="text-align: center">
+      <p-progressSpinner></p-progressSpinner>
+  </div>
+ 
+</p-dialog>

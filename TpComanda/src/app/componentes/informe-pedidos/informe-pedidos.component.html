@@ -1,0 +1,100 @@
+<app-inicio></app-inicio>
+<div class="container-fluid bg-Menu">
+    <div [(hidden)]="bandAbreInforme" class="row">
+        <div class="col-md-4 col-sm-4 col-xs-12"></div>
+            <div class="col-md-4 col-sm-4 col-xs-12">
+                <form class="form-Login">
+                    <div class="alert alert-dark" style="text-align: center;" role="alert">
+                        <div style="color:black;">La Comanda - Informes de Pedidos</div>
+                    </div>
+                   <div style="text-align: center;">
+                       <div class="form-group">
+                            <label style="color:black;">Tipo de informe: </label>
+                            <select style="color:grey;" class="form-control" [(ngModel)]="tipoInforme" [ngModelOptions]="{standalone: true}" id="tipoInforme">
+                                <option style="color:grey;" value="0">-Seleccionar tipo de informe-</option>
+                                <option style="color:grey;" value="1">Más vendidos</option>
+                                <option style="color:grey;" value="2">Menos vendidos</option>
+                                <option style="color:grey;" value="3">Listado de cancelados</option>
+                            </select>  
+                       </div>
+                        <div class="form-group">
+                            <label style="color:black;">Fecha desde:</label>
+                            <br>
+                            <p-calendar [(ngModel)]="fechaDesde" [ngModelOptions]="{standalone: true}" id="fechaDesde" dateFormat="yy-mm-dd"></p-calendar>
+                        </div>
+                        <div class="form-group">
+                            <label style="color:black;">Fecha hasta:</label>
+                            <br>
+                            <p-calendar [(ngModel)]="fechaHasta" [ngModelOptions]="{standalone: true}" id="fechaHasta" dateFormat="yy-mm-dd"></p-calendar>
+                        </div>
+                        <div class="form-group">
+                                <p-messages [(value)]="msgs"></p-messages>
+                            <button class="btn btn-success" (click)="buscarInformes()">Buscar Informe</button>
+                        </div>
+                   </div>
+                </form>
+            </div> 
+        <div class="col-md-4 col-sm-4 col-xs-12"></div>    
+    </div>
+    <div [(hidden)]="!bandAbreInforme">
+        <br><br>
+        <div class="form-group" *ngIf="tipoInforme == 1" [hidden]="informeMas">
+            <button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL" (click)="exportExcel('tablaMas')" style="margin-right: 0.5em;" class="ui-button-success"></button><button class="btn btn-primary" (click)="generarNuevo()">Generar nuevo informe</button>          
+            <br>
+            <table class="table table-dark" id="tablaMas">
+                <thead class="thead-dark">
+                    <tr>
+                    <th scope="col">Producto</th>
+                    <th scope="col">Cantidad vendida</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of PedidosMasVendidos">
+                    <td>{{item.ProductoNombre}}</td>
+                    <td>{{item.Cantidad}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="form-group" *ngIf="tipoInforme == 2" [hidden]="informeMenos">
+            <button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL" (click)="exportExcel('tablaMenos')" style="margin-right: 0.5em;" class="ui-button-success"></button><button class="btn btn-primary" (click)="generarNuevo()">Generar nuevo informe</button>
+            <br>
+            <table class="table table-dark" id="tablaMenos">
+                <thead class="thead-dark">
+                    <tr>
+                    <th scope="col">Producto</th>
+                    <th scope="col">Cantidad vendida</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of PedidosMenosVendidos">
+                    <td>{{item.ProductoNombre}}</td>
+                    <td>{{item.Cantidad}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="form-group" *ngIf="tipoInforme == 3" [hidden]="informeCancelados">
+            <button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL" (click)="exportExcel('tablaCance')" style="margin-right: 0.5em;" class="ui-button-success"></button>
+            <button class="btn btn-primary" (click)="generarNuevo()">Generar nuevo informe</button>
+            <br>
+            <table class="table table-dark" id="tablaCance">
+                <thead class="thead-dark">
+                    <tr>
+                    <th scope="col">Código de pedido</th>
+                    <th scope="col">Producto</th>
+                    <th scope="col">Fecha de cancelación</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of PedidosCancelados">
+                    <td>{{item.PedidoCodigo}}</td>
+                    <td>{{item.ProductoNombre}}</td>
+                    <td>{{item.PedidoFecha}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

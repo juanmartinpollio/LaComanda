@@ -1,0 +1,54 @@
+<app-inicio></app-inicio>
+<div class="container-fluid bg-Menu">
+    <div class="row" *ngIf="tipo == 1">
+        <div class="col-md-4 col-sm-4 col-xs-12"></div>
+        <div class="col-md-4 col-sm-4 col-xs-12">
+            <form class="form-Login">
+                <div class="alert alert-dark" style="text-align: center;" role="alert">
+                    <div style="color:black;">La Comanda - Seguimiento de pedido</div>
+                </div>
+                <div class="form-group">
+                    <label style="color:black;">Código del pedido:</label>
+                    <input style="color:black;" type="text" class="form-control" [(ngModel)]="codigoPedido" [ngModelOptions]="{standalone: true}" id="codigoPedido" placeholder="Ingrese el código de su pedido, ej: uTn20">
+                </div>
+                <div>
+                    <button type="button" (click)="buscarPedido()" class="btn btn-success btn-block">Buscar pedido</button>    
+                </div>
+                <br>
+                <p-messages [(value)]="msgs"></p-messages>        
+                <div class="form-group" [hidden]="mostrarPedido">
+                    <table class="table table-striped">
+                        <thead class="thead-dark">
+                            <tr>
+                            <th scope="col">Nombre del producto</th>
+                            <th scope="col">Mesa</th>
+                            <th scope="col">Mozo</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Tiempo de preparación estimado (minutos)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of auxProductosPedido">
+                            <td>{{item.ProductoNombre}}</td>
+                            <td>{{item.MesaNombre}}</td>
+                            <td>{{item.PedidoMozoCodigo}}</td>
+                            <td>{{item.Estado | pedidoproductoestado}}</td>
+                            <td>{{item.PedidoProductoTiempo}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-4 col-sm-4 col-xs-12"></div>
+    </div>
+    <div class="row" *ngIf="tipo == 6">
+            <div class="col-md-4 col-sm-4 col-xs-12"></div>
+            <div class="col-md-4 col-sm-4 col-xs-12">
+                <form class="form-Login">
+                    <app-estadistica-socio></app-estadistica-socio>    
+                </form>
+                    <div class="col-md-4 col-sm-4 col-xs-12"></div>
+                </div>
+            </div>
+        </div>

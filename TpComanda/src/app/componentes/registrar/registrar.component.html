@@ -1,0 +1,43 @@
+<div class="container-fluid bg-Menu">
+    <br>
+    <br>
+    <div style="text-align: center">
+      <form class="form-Login" style="margin: 0 auto;padding-left:25%;padding-right:25%">
+        <div class="form-group">
+          <label class="col-lg-4 control-label" for="usuarioNombre">Usuario:</label>
+          <div class=""> 
+            <input type="text" class="form-control" id="usuarioNombre" placeholder="Nombre del usuario ej: jmp">
+          </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-4 control-label"  for="usuarioPassword">Contraseña</label>
+            <div class=""> 
+                <input type="password" class="form-control" id="usuarioPassword" placeholder="Contraseña">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-4 control-label"  for="usuarioPasswordConf">Confirmar contraseña</label>
+            <div class=""> 
+                <input type="password" class="form-control" id="usuarioPasswordConf" placeholder="Confirmar contraseña">
+            </div>
+        </div>
+        <div class="form-group">
+          <img src="{{imagenPreview}}" width="200px" height="200px" alt="">
+          <ngx-file-drop  (onFileDrop)="dropped($event)" 
+          (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
+              <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+                <button type="button" (click)="openFileSelector()">Browse Files</button>
+              </ng-template>
+          </ngx-file-drop>
+        </div>
+        <button type="button" (click)="crearUsuario()" class="btn btn-primary">Crear usuario</button>
+        <br>
+        <br>
+        <button type="burron" class="btn btn-primary" routerLink="/">Volver al login</button>
+      </form>
+      <p-messages [(value)]="msgs"></p-messages>  
+
+      <br>
+      <br>
+    </div>
+</div>

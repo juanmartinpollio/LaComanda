@@ -1,0 +1,80 @@
+<app-inicio></app-inicio>
+<div class="container-fluid bg-Mesas">
+  <br><br>
+  <p-messages [(value)]="msgs"></p-messages>
+  <div *ngIf="tipo != 2">
+    <div class="alert alert-dark" style="text-align: center;" role="alert">
+        <div style="color:black;">Pedidos pendientes</div>
+    </div>
+    <table class="table table-dark">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Producto</th>
+            <th scope="col">Preparador</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Tiempo estimado de preparación</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of productosPendientes; let i = index">
+            <th scope="row">{{item.ProductoNombre}}</th>
+            <td>{{item.PreparadorCodigo}}</td>
+            <td>{{item.Estado | pedidoproductoestado}}</td>
+            <td><input type="number" min="1" class="form-control" id="{{i}}" [(ngModel)]="productosPendientes[i].PedidoProductoTiempo"></td>
+            <td ><button class="btn btn-success" (click)="CambiarEstado(2, item.PedidoProductoCodigo, productosPendientes[i].PedidoProductoTiempo)">Preparar</button><button class="btn btn-danger" (click)="CambiarEstado(5, item.PedidoProductoCodigo)">Cancelar</button></td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+  <div *ngIf="tipo != 2">
+    <div class="alert alert-dark" style="text-align: center;" role="alert">
+        <div style="color:black;">Pedidos en elaboración</div>
+    </div>
+    <table class="table table-dark">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Producto</th>
+          <th scope="col">Preparador</th>
+          <th scope="col">Estado</th>
+          <th scope="col">Tiempo estimado de preparación</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of productosPreparacion">
+          <th scope="row">{{item.ProductoNombre}}</th>
+          <td>{{item.PreparadorCodigo}}</td>
+          <td>{{item.Estado | pedidoproductoestado}}</td>
+          <td>{{item.PedidoProductoTiempo}}</td>
+          <td ><button class="btn btn-success" (click)="CambiarEstado(3, item.PedidoProductoCodigo)">Listo</button> <button class="btn btn-danger" (click)="CambiarEstado(5, item.PedidoProductoCodigo)">Cancelar</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div *ngIf="tipo == 2">
+    <div class="alert alert-dark" style="text-align: center;" role="alert">
+        <div style="color:black;">Pedidos listos para servir</div>
+    </div>
+    <table class="table table-dark">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Producto</th>
+          <th scope="col">Preparador</th>
+          <th scope="col">Estado</th>
+          <th scope="col">Tiempo estimado de preparación</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of productosListos">
+          <th scope="row">{{item.ProductoNombre}}</th>
+          <td>{{item.PreparadorCodigo}}</td>
+          <td>{{item.Estado | pedidoproductoestado}}</td>
+          <td>{{item.PedidoProductoTiempo}}</td>
+          <td><button class="btn btn-success" (click)="CambiarEstado(4, item.PedidoProductoCodigo)">Servido</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

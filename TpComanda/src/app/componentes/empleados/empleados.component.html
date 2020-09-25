@@ -1,0 +1,35 @@
+<app-inicio></app-inicio>
+<div class="container-fluid bg-Menu">
+  <div class="row" style="text-align:center;">
+    <div class="col-md-4 col-sm-4 col-xs-12"></div>
+        <form class="form-Login">
+          <div class="container" style="padding-top:2%;text-align:center;"  role="alert">
+            <button class="btn btn-primary" type="button" routerLink="/AltaEmpleados">Registrar nuevo empleado</button>
+            <br>
+            <br>
+            <table class="table table-striped">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">Empleado</th>
+                  <th scope="col">Tipo de Usuario</th>
+                  <th scope="col">Estado</th>
+                  <th scope="col"></th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of listaUsuarios">
+                  <td>{{item.usuario}}</td>
+                  <td>{{item.tipo | usuarioTipo}}</td>
+                  <td>{{item.estado | usuarioEstado}}</td>
+                  <td><img src="{{item.imagen}}" width="100px" height="100px" alt=""></td>          
+                  <td><button class="btn btn-success" type="button" routerLink="/AdministrarEmpleados/{{item.usuario}}">Modificar</button></td> 
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </form>
+        <div class="col-md-4 col-sm-4 col-xs-12"></div>    
+  </div>
+  <br><br>
+</div>

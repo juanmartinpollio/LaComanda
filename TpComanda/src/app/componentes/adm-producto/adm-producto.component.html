@@ -1,0 +1,59 @@
+<app-inicio></app-inicio>
+<div class="container-fluid bg-Menu">
+    <br>
+    <br>
+    <div style="text-align: center;background-color:white;">
+      <br>
+      <form class="form-Producto" style="margin: 0 auto;padding-left:25%;padding-right:25%;">
+        <div class="form-group">
+          <label class="col-lg-4 control-label" for="productoNombre">Nombre del producto:</label>
+          <div class=""> 
+            <input type="text" class="form-control" id="productoNombre" placeholder="Nombre del producto ej: Pizza napolitana">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-lg-4 control-label" for="productoTipo">Tipo de producto:</label>
+          <div class=""> 
+            <select class="form-control" id="productoTipo">
+              <option>Seleccione...</option>
+              <option value="3">Bebida/Trago</option>
+              <option value="4">Cerveza</option>
+              <option value="5">Plato</option>
+              <option value="7">Postre</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-lg-4 control-label"  for="productoHabilitado">Disponibilidad</label>
+          <div class=""> 
+            <select class="form-control" id="productoHabilitado">
+              <option>Seleccione...</option>
+              <option value="0">No disponible</option>
+              <option value="1">Disponible</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-lg-4 control-label" for="productoImporte">Importe</label>
+          <div class=""> 
+            <input type="number" min='0' value='0' class="form-control" id="productoImporte" placeholder="Importe del producto">
+          </div>  
+        </div>
+        <div class="form-group">
+          <img src="{{imagenPreview}}"  width="200px" height="200px"  alt="">
+          <ngx-file-drop  (onFileDrop)="dropped($event)">
+              <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+                <button type="button" (click)="openFileSelector()">Browse Files</button>
+              </ng-template>
+          </ngx-file-drop>
+        </div>
+        <p-messages [(value)]="msgs"></p-messages>
+        <button type="button" (click)="cargarProducto()" class="btn btn-primary">Cargar producto</button>
+        <br><br>
+
+      
+      <button class="btn btn-success" routerLink='/MenuProductos'>Volver al menú de productos</button>
+      </form>
+      <br>
+    </div>
+</div>

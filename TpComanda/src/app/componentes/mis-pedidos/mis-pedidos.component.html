@@ -1,0 +1,30 @@
+<app-inicio></app-inicio>
+<div class="container-fluid bg-Menu">
+  <br><br>
+  <div style="text-align: center;"><button class="btn btn-success" (click)="refrescarLista()">Refrescar lista</button></div>
+  <br>
+  <p-messages [(value)]="msgs"></p-messages>  
+  <br>
+  <table class="table table-dark">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Cod. Pedido</th>
+        <th scope="col">Mesa</th>
+        <th scope="col">Mozo</th>
+        <th scope="col">Producto</th>
+        <th scope="col">Estado</th>
+        <th scope="col">Tiempo restante</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of productosPedido">
+        <th scope="row">{{item.PedidoCodigo}}</th>
+        <td>{{item.MesaNombre}}</td>
+        <td>{{item.PedidoMozoCodigo}}</td>
+        <td>{{item.ProductoNombre}}</td>
+        <td>{{item.Estado | pedidoproductoestado}}</td>
+        <td>{{item.PedidoProductoTiempo}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,32 @@
+<p-toolbar>
+    <div class="ui-toolbar-group-left">
+        <div>
+        <div *ngIf="tipo == 6"> <!--SOCIOS VEN TODO-->    
+            <button pButton type="button" icon="pi pi-home" label="Inicio"  routerLink="/MenuPrincipal"></button>    
+            <button pButton type="button" icon="pi pi-id-card" label="Empleados"  routerLink="/Empleados"></button>
+            <button pButton type="button" icon="pi pi-apple" label="Administrar menú" routerLink="/MenuProductos"></button>
+            <button pButton type="button" icon="pi pi-th-large" label="Administrar mesas" routerLink="/MenuMesas"></button>
+            <button pButton type="button" icon="pi pi-dollar" label="Administrar pagos" routerLink="/AdministrarCuentas"></button>
+            <p-splitButton label="Informes" icon="pi pi-check" [model]="items"></p-splitButton>
+        </div>
+        <div *ngIf="tipo != 1 && tipo != 2 && tipo != 6"> <!--EMPLEADOS GASTRONÓMICOS-->
+            <button pButton type="button" icon="pi pi-home" label="Inicio"  routerLink="/MenuPrincipal"></button>    
+            <button pButton type="button" icon="pi pi-info-circle" label="Pedidos a realizar" routerLink="/PedidosARealizar"></button>
+        </div>
+        <div *ngIf="tipo == 2"> <!--MOZO-->
+            <button pButton type="button" icon="pi pi-home" label="Inicio"  routerLink="/MenuPrincipal"></button>    
+            <button pButton type="button" icon="pi pi-th-large" label="Administrar mesas" routerLink="/MenuMesas"></button>
+            <button pButton type="button" icon="pi pi-info-circle" label="Pedidos a realizar" routerLink="/PedidosARealizar"></button>
+        </div>
+        <div *ngIf="tipo == 1"> <!--CLIENTE-->
+            <button pButton type="button" icon="pi pi-home" label="Inicio"  routerLink="/MenuPrincipal"></button>    
+            <button pButton type="button" icon="pi pi-info-circle" label="Mis pedidos" routerLink="/MisPedidos"></button>
+            <button pButton type="button" icon="pi pi-info-circle" label="Mis encuestas" routerLink="/MisEncuestas"></button>
+        </div>
+        </div>  
+    </div>
+    <div class="ui-toolbar-group-right">
+        <a routerLink="/AdministrarClientes/{{usuario}}"><img class='avatar' src="/assets/imagenes/{{imagen}}" width='50' height="30" cir radius='50%' alt=""></a>
+        <button pButton type="button" icon="pi pi-times" label="Logout" (click)="Logout()" class="ui-button-danger"></button>
+    </div>
+</p-toolbar>

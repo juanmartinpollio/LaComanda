@@ -1,0 +1,50 @@
+
+<div class="container-fluid bg-Login">
+    <div class="row">
+        <div class="col-md-4 col-sm-4 col-xs-12"></div>
+        <div class="col-md-4 col-sm-4 col-xs-12">
+        <!--Form arranca-->
+        <form class="form-Login">
+            <div class="alert alert-dark" style="text-align: center;" role="alert">
+                <div style="color:black;">La Comanda - Inicio</div>
+            </div>
+          <div class="form-group">
+            <label style="color:black;">Usuario:</label>
+            <input style="color:black;" type="text" class="form-control" [(ngModel)]="unUsuario.usuario" [ngModelOptions]="{standalone: true}" id="nombreUsuario" placeholder="Ingrese su usuario">
+          </div>  
+          <div class="form-group">
+            <label style="color:black;">Contraseña:</label>
+            <input style="color:black;" type="password" class="form-control" [(ngModel)]="unUsuario.contrasenia" [ngModelOptions]="{standalone: true}" id="passwordUsuario" placeholder="Ingrese su contraseña">
+          </div>
+          <button type="button" (click)="iniciarSesion()" [disabled]="inicioSesion" class="btn btn-success btn-block">
+              Iniciar sesión</button>
+          <br>
+          <div class="form-group">
+              <label style="color:black;">Iniciar sesión rápido como: </label>
+              <select style="color:grey;" class="form-control" [(ngModel)]="tipoUsuario" [ngModelOptions]="{standalone: true}" id="perfilUsuario" (change)="seleccionaPerfil($event.target.value)">
+                <option style="color:grey;" value="0">-Seleccione perfil de usuario-</option>
+                <option style="color:grey;" value="1">Cliente</option>
+                <option style="color:grey;" value="2">Mozo</option>
+                <option style="color:grey;" value="3">Bartender</option>
+                <option style="color:grey;" value="4">Cervecero</option>
+                <option style="color:grey;" value="5">Cocinero</option>
+                <option style="color:grey;" value="6">Socio</option>
+                <option style="color:grey;" value="7">Repostero</option>
+              </select>  
+        </div>
+        <div class="form-group">
+            <button type="button" class="btn btn-primary" routerLink="/Registrar">Crear mi cuenta</button>            
+        </div>
+        </form>
+        <!--Form termina-->
+  <p-messages [(value)]="msgs"></p-messages>
+        
+        <div class="col-md-4 col-sm-4 col-xs-12"></div>
+    </div>
+  </div>
+  <p-dialog [blockScroll]="true" [showHeader]=false [closable]=false [(visible)]="Display">
+      <div style="text-align: center">
+          <p-progressSpinner></p-progressSpinner>
+      </div>
+     
+  </p-dialog>

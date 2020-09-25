@@ -1,0 +1,48 @@
+<app-inicio></app-inicio>
+
+<div class="container-fluid bg-Menu">
+    <br>
+    <br>
+    <div style="text-align: center">
+      <form class="form-Login" style="margin: 0 auto;padding-left:15%;padding-right:15%">
+        <div class="form-group">
+          <label class="col-lg-4 control-label" for="usuarioNombre">Usuario del empleado:</label>
+          <div class=""> 
+            <input type="text" class="form-control" id="usuarioNombre" placeholder="Nombre del usuario ej: jmp" readonly>
+          </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-4 control-label"  for="usuarioPassword">Contraseña</label>
+            <div class=""> 
+                <input type="password" class="form-control" id="usuarioPassword" placeholder="Contraseña">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-4 control-label"  for="usuarioPasswordConf">Confirmar contraseña</label>
+            <div class=""> 
+                <input type="password" class="form-control" id="usuarioPasswordConf" placeholder="Confirmar contraseña">
+            </div>
+        </div>
+        <div class="form-group">
+          <img src="{{imagenPreview}}" width="200px" height="200px">
+          <ngx-file-drop  (onFileDrop)="dropped($event)" 
+          (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
+              <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+                <button type="button" (click)="openFileSelector()">Browse Files</button>
+              </ng-template>
+          </ngx-file-drop>
+        </div>
+        <p-messages [(value)]="msgs"></p-messages>
+        <button type="button" (click)="modificarUsuario()" class="btn btn-primary">Modificar usuario</button>
+      </form>
+      <br>
+      <br>
+      <br>
+    </div>
+</div>
+<p-dialog [showHeader]=false [closable]=false [(visible)]="Display">
+  <div style="text-align: center">
+      <p-progressSpinner></p-progressSpinner>
+  </div>
+ 
+</p-dialog>

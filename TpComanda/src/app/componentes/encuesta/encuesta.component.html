@@ -1,0 +1,83 @@
+<app-inicio></app-inicio>
+
+<div class="container-fluid bg-Menu">
+  <div style="text-align: center;">
+    <br><br>
+    <button class="btn btn-success" [disabled]="encuestasDisponibles" (click)="generarEncuesta()">Realizar encuestas</button>
+    <br><br>
+    <div class="alert alert-dark">Encuestas realizadas</div>
+    <br>
+    <table class="table table-light">
+        <thead class="thead-light">
+            <tr>
+            <th scope="col">Calificaciones del establecimiento</th>
+            <th scope="col">Calificaciones del personal</th>
+            <th scope="col">Comentario</th>
+            <th scope="col">Realización de encuesta</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of misEncuestas">
+            <td>
+                <label style="color:black;">Mesa: </label>
+                <p-rating [(ngModel)]="item.EncuestaValMesa" readonly="true" [cancel]="false"  stars="10"></p-rating> 
+                <hr>
+                <label style="color:black;">Restaurant: </label>
+                <p-rating [(ngModel)]="item.EncuestaValRest" readonly="true"  [cancel]="false"  stars="10"></p-rating> 
+                <hr>
+                <label style="color:black;">Precio-calidad: </label>
+                <p-rating [(ngModel)]="item.EncuestaValPrecioCalidad" readonly="true" [cancel]="false"  stars="10"></p-rating> 
+            </td>
+            <td>
+                <label style="color:black;">Mozo: </label>
+                <p-rating [(ngModel)]="item.EncuestaValMozo" readonly="true" [cancel]="false"  stars="10"></p-rating> 
+                <hr>
+                <label style="color:black;">Bartender: </label>
+                <p-rating [(ngModel)]="item.EncuestaValBartender" readonly="true"  [cancel]="false"  stars="10"></p-rating> 
+                <hr>
+                <label style="color:black;">Cocinero: </label>
+                <p-rating [(ngModel)]="item.EncuestaValEmp" readonly="true" [cancel]="false"  stars="10"></p-rating> 
+                <hr>
+                <label style="color:black;">Cervecero: </label>
+                <p-rating [(ngModel)]="item.EncuestaValCerve" readonly="true" [cancel]="false"  stars="10"></p-rating> 
+            </td>
+            <td>{{item.EncuestaValComentario}}</td>
+            <td>{{item.EncuestaFecha}}</td>
+            </tr>
+        </tbody>
+    </table>
+  </div>
+  
+  <p-dialog header="Encuesta" [(visible)]="hacerEncuesta">
+    <div class="banner" style="display: flex; justify-content: center; align-items: center;">
+      <p-card  style="text-align: center" [style]="{width: '400px'}" styleClass="ui-card-shadow">
+        <p-messages [(value)]="msgs"></p-messages>  
+        <label style="color:black;">Seleccione la cuenta de la encuesta a realizar:</label>      
+        <select class="form-control" [(ngModel)]="CodigoCuenta" name="miselect">
+          <option [value]="item.CuentaCodigo" *ngFor="let item of encuestas">{{item.PedidoCodigo}}</option>
+        </select>
+        <br>
+        <h3 style="color: azure;background-color: black">Califique a la mesa</h3>
+        <p-rating [(ngModel)]="val1"  [cancel]="false"  stars="10"></p-rating> 
+        <h3 style="color: azure;background-color: black">Califique al restaurant</h3>
+        <p-rating [(ngModel)]="val2"  [cancel]="false"  stars="10"></p-rating> 
+        <h3 style="color: azure;background-color: black">Califique al mozo</h3>
+        <p-rating [(ngModel)]="val3"  [cancel]="false"  stars="10"></p-rating>
+        <h3 style="color: azure;background-color: black">Califique al cocinero</h3> 
+        <p-rating [(ngModel)]="val4"  [cancel]="false"  stars="10"></p-rating>   
+        <h3 style="color: azure;background-color: black">Califique al bartender</h3> 
+        <p-rating [(ngModel)]="val6"  [cancel]="false"  stars="10"></p-rating>   
+        <h3 style="color: azure;background-color: black">Califique al cervecero</h3> 
+        <p-rating [(ngModel)]="val7"  [cancel]="false"  stars="10"></p-rating>   
+        <h3 style="color: azure;background-color: black">Relación precio/calidad</h3> 
+        <p-rating [(ngModel)]="val8"  [cancel]="false"  stars="10"></p-rating>   
+        <input [(ngModel)]="val5" class="form-control" type="text" id="lname" name="lname" placeholder="Deje su comentario aquí (max. 66 caracteres)" maxlength="66">
+          <p-footer>
+            <button  pButton type="button" label="Enviar Respuestas" (click)="Enviar()" style="margin-right: .25em"></button>
+          </p-footer>
+      </p-card>
+    </div>
+  </p-dialog>
+
+  <br>
+</div>
